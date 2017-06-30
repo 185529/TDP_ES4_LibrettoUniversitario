@@ -1,15 +1,8 @@
 package it.polito.tdp.librettouniversitario.model;
 
-import java.util.LinkedList;
-import java.util.List;
+import it.polito.tdp.librettouniversitario.db.EsameDAO;
 
 public class Model {
-	
-	private List<Esame> esami;
-	
-	public Model(){
-		this.esami = new LinkedList<Esame>();
-	}
 	
 	/**
 	 * Aggiunge un nuovo esame all'elenco
@@ -19,12 +12,9 @@ public class Model {
 	 */
 	public boolean addEsame(Esame e){
 		
-		if(!esami.contains(e)){
-			esami.add(e);
-			return true;
-		}else{
-			return false;
-		}
+		EsameDAO dao = new EsameDAO();
+		
+		return dao.create(e);
 		
 	}
 	
@@ -35,13 +25,11 @@ public class Model {
 	 */
 	public Esame trovaEsame(String codice){
 		
-		int pos = this.esami.indexOf(new Esame(codice, null, null));
+		EsameDAO dao = new EsameDAO();
 		
-		if(pos==-1){
-			return null;
-		}else{
-			return this.esami.get(pos);
-		}
+		Esame result = dao.find(codice);
+		
+		return result;
 		
 	}
 
