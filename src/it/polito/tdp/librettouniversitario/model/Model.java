@@ -1,14 +1,15 @@
 package it.polito.tdp.librettouniversitario.model;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Iterator;
 
 public class Model {
 	
-	private List<Esame> esami;
+	// molto meglio HashMap non solo per aggiunta ma anche per ricerca
+	private HashSet<Esame> esami;
 	
 	public Model(){
-		this.esami = new LinkedList<Esame>();
+		this.esami = new HashSet<Esame>();
 	}
 	
 	/**
@@ -35,13 +36,23 @@ public class Model {
 	 */
 	public Esame trovaEsame(String codice){
 		
-		int pos = this.esami.indexOf(new Esame(codice, null, null));
+		if(esami.contains(new Esame(codice, null, null))){
+			
+			Iterator<Esame> it = esami.iterator();
+			
+			while(it.hasNext()){
+				
+				Esame e = it.next();
+				
+				if(e.equals(new Esame(codice, null, null))){
+					return e;
+				}
 		
-		if(pos==-1){
+			}
+			
 			return null;
-		}else{
-			return this.esami.get(pos);
-		}
+			
+		}else return null;
 		
 	}
 
